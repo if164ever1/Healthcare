@@ -36,6 +36,18 @@ namespace Healthcare.Models
         {
             return this.FirstName + " " + this.LastName;
         }
+        [Required]
+        public  string Token 
+        {
+            get 
+            {
+                return this.Token;
+            }
+            set 
+            {
+                (this.Id + this.FirstName).ToString();
+            }
+        }
     }
 
 }

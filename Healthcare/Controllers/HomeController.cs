@@ -1,10 +1,8 @@
 ﻿using Healthcare.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.Security.Cryptography;
+
 using System.Threading.Tasks;
 
 namespace Healthcare.Controllers
@@ -29,6 +27,10 @@ namespace Healthcare.Controllers
         }
 
         public async Task<IActionResult> Register()
+        {
+            return await Task.Run(() => View());
+        }
+        public async Task<IActionResult> Login()
         {
             return await Task.Run(() => View());
         }
