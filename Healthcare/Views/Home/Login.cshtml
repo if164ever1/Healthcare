@@ -1,4 +1,4 @@
-﻿@model Healthcare.Models.UserModel
+﻿@model Healthcare.Models.UserLogin
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,6 +22,10 @@
                         @Html.LabelFor(m => m.Password)
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
                     </div>
+
+
+
+
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-primary" value="Login" />
                     </div>

@@ -23,7 +23,8 @@ namespace Healthcare
             services.AddDbContext<UserContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            // services.AddSession();
+            services.AddTransient<IUserContext, UserContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +42,7 @@ namespace Healthcare
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
+            //app.UseSession();
 
             app.UseRouting();
 
@@ -51,7 +52,7 @@ namespace Healthcare
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
