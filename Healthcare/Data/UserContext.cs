@@ -1,6 +1,5 @@
 ﻿using Healthcare.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading.Tasks;
 
 namespace Healthcare.Data
@@ -13,9 +12,10 @@ namespace Healthcare.Data
         public UserContext(DbContextOptions<UserContext> options): base(options)
         { }
 
-        public DbSet<UserModel> Users { get; set; }
-        
-        public Task SaveChangesAsync() => base.SaveChangesAsync();
+        public DbSet<IUserModel> Users { get; set; }
 
+        public DbSet<TokenModel> Tokens { get; set; }
+
+        public Task SaveChangesAsync() => base.SaveChangesAsync();
     }
 }

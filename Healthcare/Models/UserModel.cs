@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Healthcare.Models
 {
-    public class UserModel
+    public class UserModel: IUserModel
     {
         [Key, Column(Order = 1)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -26,25 +25,6 @@ namespace Healthcare.Models
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8, 15}$")]
         public string Password { get; set; }
 
-
-
-        //[NotMapped]
-        //[Required]
-        //[System.ComponentModel.DataAnnotations.Compare("Password")]
-        [Display(Name = "Confirm password")]
-        [Required(ErrorMessage = "Please enter confirm password")]
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
-        public string FullName()
-        {
-            return this.FirstName + " " + this.LastName;
-        }
-
-        public string Token
-        {
-            get;set;
-        }
     }
 
 }

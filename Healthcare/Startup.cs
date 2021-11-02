@@ -23,8 +23,9 @@ namespace Healthcare
             services.AddDbContext<UserContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
-            // services.AddSession();
-            services.AddTransient<IUserContext, UserContext>();
+            //services.AddTransient<IUserContext, UserContext>();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,17 +43,19 @@ namespace Healthcare
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseSession();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Index}/{id?}");
             });
         }
     }
