@@ -1,8 +1,10 @@
 ﻿using Healthcare.Data;
 using Healthcare.Models;
 using Healthcare.Models.Request;
+using Healthcare.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace Healthcare.Controllers
@@ -18,25 +20,25 @@ namespace Healthcare.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegistrationRequest userRequest)
+        public async Task<IActionResult> Register(RegistrationRequest registerRequest)
         {
-            if (userContext.Users.FirstOrDefault(u => u.Email == userRequest.Email) != null)
+            if (userContext.Users.FirstOrDefault(u => u.Email == registerRequest.Email) != null)
             {
-                return BadRequest("Login already use");
+                return BadRequest(new { message = "Login already use" } );
             }
 
             UserModel userModel = new UserModel
             {
-                FirstName = userRequest.FirstName,
-                LastName = userRequest.LastName,
-                Email = userRequest.Email,
-                Password = userRequest.Password
+                FirstName = registerRequest.FirstName,
+                LastName = registerRequest.LastName,
+                Email = registerRequest.Email,
+                Password = CustomHash.HashPassword(registerRequest.Password)
             };
 
             userContext.Users.Add(userModel);
             await userContext.SaveChangesAsync();
 
-            return Ok("Registration is succesfuly");
+            return Ok( new { message = "Registration is succesfuly" } );
         }
     }
 }

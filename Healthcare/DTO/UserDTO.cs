@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Healthcare.DTO
 {
     [DataContract]
-    public  class UserDTO: IUserModel
+    public  class UserDTO: UserModel
     {
         [DataMember]
         public int Id { get; set; }

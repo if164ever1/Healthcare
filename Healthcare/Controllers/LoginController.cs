@@ -1,6 +1,7 @@
 ﻿using Healthcare.Data;
 using Healthcare.Models;
 using Healthcare.Models.Responce;
+using Healthcare.Security;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -19,20 +20,19 @@ namespace Healthcare.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest userLogin)
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var user = userContext.Users.SingleOrDefault(x => x.Email == userLogin.Email);
+            var user = userContext.Users.SingleOrDefault(x => x.Email == loginRequest.Email);
 
-            if (user == null || (user.Password != userLogin.Password))
+            if (user == null || !(CustomHash.PasswordCheck(loginRequest.Password, user.Password)))
             {
-                return BadRequest("Login or Password is incorrect");
+                return BadRequest(new { message = "Login or Password is incorrect" }   );
             }
 
             var token = Guid.NewGuid().ToString();
 
             userContext.Tokens.Add(new TokenModel
             {
-                Id = userLogin.Id,
                 Token = token
             });
 

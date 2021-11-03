@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Healthcare.Data
 {
-    public class UserContext: DbContext, IUserContext
+    public class UserContext: DbContext
     {
         public UserContext()
         {
@@ -12,7 +12,7 @@ namespace Healthcare.Data
         public UserContext(DbContextOptions<UserContext> options): base(options)
         { }
 
-        public DbSet<IUserModel> Users { get; set; }
+        public DbSet<UserModel> Users { get; set; }
 
         public DbSet<TokenModel> Tokens { get; set; }
 
