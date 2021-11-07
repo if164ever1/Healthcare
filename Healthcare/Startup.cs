@@ -25,7 +25,12 @@ namespace Healthcare
             services.AddDistributedMemoryCache();
             //services.AddTransient<IUserContext, UserContext>();
 
-            services.AddSwaggerGen();
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                 c.OperationFilter<CustomHeaderSwaggerAttribute>();
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +54,11 @@ namespace Healthcare
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
+
+
+
+           
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

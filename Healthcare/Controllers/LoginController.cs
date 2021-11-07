@@ -24,22 +24,22 @@ namespace Healthcare.Controllers
         {
             var user = userContext.Users.SingleOrDefault(x => x.Email == loginRequest.Email);
 
-            if (user == null || !(CustomHash.PasswordCheck(loginRequest.Password, user.Password)))
-            {
-                return BadRequest(new { message = "Login or Password is incorrect" }   );
-            }
-
             var token = Guid.NewGuid().ToString();
 
-            userContext.Tokens.Add(new TokenModel
+            if (user == null || !(CustomHash.PasswordCheck(loginRequest.Password, user.Password)))
             {
-                Token = token
-            });
+                return BadRequest(new { message = "Login or Password is incorrect" });
+            }
+
+            var currentUserId = userContext.Tokens.SingleOrDefault(u => u.Id == user.Id);
+
+            currentUserId.Token = token;
 
             await userContext.SaveChangesAsync();
 
             return Ok(new LoginResponse
             {
+                Id = user.Id,
                 Token = token
             });
         }

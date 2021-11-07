@@ -25,6 +25,8 @@ namespace Healthcare.Models
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8, 15}$")]
         public string Password { get; set; }
 
+        //public int TokenModelId { get; set; }
+
     }
 
 }
